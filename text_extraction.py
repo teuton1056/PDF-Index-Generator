@@ -1,6 +1,7 @@
 import PyPDF2
 import json
 import re
+import sys
 
 # NT and OT json files originally from https://github.com/TehShrike/books-of-the-bible
 # some alterations have been made to the original files, but the core design and much content remains the same.
@@ -84,4 +85,9 @@ def create_idx(fname,base_number=1):
         fp.write(index)
 
 if __name__ == '__main__':
-    create_idx('VT_Article.pdf',617)
+    if len(sys.argv) != 3:
+        raise Exception(f"Too few arguments. Excepted 2, recieved {len(sys.argv) - 1}")
+    fname = sys.argv[1]
+    base_page = int(sys.argv[2])
+    create_idx(fname,base_page)
+    #create_idx('VT_Article.pdf',617)

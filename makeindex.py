@@ -62,4 +62,5 @@ def main(fname="references.pidx"):
     fp.write('\\end{multicols}\\end{document}')
     fp.close()
 
-main()
+if __name__ == "__main__":
+    main()
