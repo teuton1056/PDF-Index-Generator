@@ -1,0 +1,94 @@
+[
+    {
+        "name":"Tobit",
+        "aliases":["Tob"]
+    },
+    {
+        "name":"Judith",
+        "aliases":["Jdt"]
+    },
+    {
+        "name":"Additions to Esther",
+        "aliases":["Add Esth"]
+    },
+    {
+        "name":"Wisdom of Solomon",
+        "aliases":["Wis","Wis-Sol"]
+    },
+    {
+        "name":"Sirach",
+        "aliases":["Sir","Ecclesiasticus"]
+    },
+    {
+        "name":"Baruch",
+        "aliases":["Bar"]
+    },
+    {
+        "name":"Ep Jer",
+        "aliases":["Epistle of Jeremiah"]
+    },
+    {
+        "name":"Additions to Daniel",
+        "aliases":["Add Dan"]
+    },
+    {
+        "name":"Prayer of Azariah",
+        "aliases":["Pr Azar"]
+    },
+    {
+        "name":"Bel and the Dragon",
+        "aliases":["Bel"]
+    },
+    {
+        "name":"Song of the Three Young Men",
+        "aliases":["Sg Three"]
+    },
+    {
+        "name":"Susanna",
+        "aliases":["Sus"]
+    },
+    {
+        "name":"1 Maccabess",
+        "aliases":["1 Macc"]
+    },
+    {
+        "name":"2 Maccabess",
+        "aliases":["2 Macc"]
+    },
+    {
+        "name":"1-2 Maccabess",
+        "aliases":["1-2 Macc"]
+    },
+    {
+        "name":"3 Maccabess",
+        "aliases":["3 Macc"]
+    },
+    {
+        "name":"4 Maccabess",
+        "aliases":["4 Macc"]
+    },
+    {
+        "name":"3-4 Maccabess",
+        "aliases":["3-4 Macc"]
+    },
+    {
+        "name":"1 Esdras",
+        "aliases":["1 Esd"]
+    },
+    {
+        "name":"2 Esdras",
+        "aliases":["2 Esd"]
+    },
+    {
+        "name":"1-2 Esdras",
+        "aliases":["1-2 Esd"]
+    },
+    {
+        "name":"Prayer of Manasseh",
+        "aliases":["Pr Man"]
+    },
+    {
+        "name":"Psalm 151",
+        "aliases":["Ps 151"]
+    }
+]

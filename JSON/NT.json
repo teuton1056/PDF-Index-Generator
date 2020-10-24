@@ -1,0 +1,195 @@
+[
+    {
+		"name": "Matthew",
+		"aliases": [
+			"Matt"
+		]
+	},
+	{
+		"name": "Mark",
+		"aliases": ["Mark"]
+	},
+	{
+		"name": "Luke",
+		"aliases": ["Luke"]
+	},
+	{
+		"name": "John",
+		"aliases": ["John"]
+	},
+	{
+		"name": "Acts",
+		"aliases": ["Acts"]
+	},
+	{
+		"name": "Romans",
+		"aliases": [
+			"Rom"
+		]
+	},
+	{
+		"name": "1 Corinthians",
+		"aliases": [
+			"1 Cor",
+			"1st Cor",
+			"1st Corinthians",
+			"First Corinthians"
+		]
+	},
+	{
+		"name": "2 Corinthians",
+		"aliases": [
+			"2 Cor",
+			"2nd Cor",
+			"2nd Corinthians",
+			"Second Corinthians"
+		]
+    },
+    {
+        "name":"1-2 Corinthians",
+        "aliases":["1-2 Cor"]
+    },
+	{
+		"name": "Galatians",
+		"aliases": [
+			"Gal"
+		]
+	},
+	{
+		"name": "Ephesians",
+		"aliases": [
+			"Eph"
+		]
+	},
+	{
+		"name": "Philippians",
+		"aliases": [
+			"Phil"
+		]
+	},
+	{
+		"name": "Colossians",
+		"aliases": [
+			"Col"
+		]
+	},
+	{
+		"name": "1 Thessalonians",
+		"aliases": [
+			"1 Thess",
+			"1st Thess",
+			"1st Thessalonians",
+			"First Thessalonians"
+		]
+	},
+	{
+		"name": "2 Thessalonians",
+		"aliases": [
+			"2 Thess",
+			"2nd Thess",
+			"2nd Thessalonians",
+			"Second Thessalonians"
+		]
+    },
+    {
+        "name":"1-2 Thessalonians",
+        "aliases":["1-2 Thess"]
+    },
+	{
+		"name": "1 Timothy",
+		"aliases": [
+			"1 Tim",
+			"1st Tim",
+			"1st Timothy",
+			"First Timothy"
+		]
+	},
+	{
+		"name": "2 Timothy",
+		"aliases": [
+			"2 Tim",
+			"2nd Tim",
+			"2nd Timothy",
+			"Second Timothy"
+		]
+    },
+    {
+        "name":"1-2 Timothy",
+        "aliases":["1-2 Tim"]
+    },
+	{
+		"name": "Titus",
+		"aliases": []
+	},
+	{
+		"name": "Philemon",
+		"aliases": [
+			"Phlm"
+		]
+	},
+	{
+		"name": "Hebrews",
+		"aliases": [
+			"Heb"
+		]
+	},
+	{
+		"name": "James",
+		"aliases": [
+			"Jas"
+		]
+	},
+	{
+		"name": "1 Peter",
+		"aliases": [
+			"1 Pet",
+			"1st Pet",
+			"1st Peter",
+			"First Peter"
+		]
+	},
+	{
+		"name": "2 Peter",
+		"aliases": [
+			"2 Pet",
+			"2nd Pet",
+			"2nd Peter",
+			"Second Peter"
+		]
+    },
+    {
+        "name":"1-2 Peter",
+        "aliases":["1-2 Pet"]
+    },
+	{
+		"name": "1 John",
+		"aliases": [
+			"1st John",
+			"First John"
+		]
+	},
+	{
+		"name": "2 John",
+		"aliases": [
+			"2nd John",
+			"Second John"
+		]
+	},
+	{
+		"name": "3 John",
+		"aliases": [
+			"3rd John",
+			"Third John"
+		]
+	},
+	{
+		"name": "Jude",
+		"aliases": []
+	},
+	{
+		"name": "Revelation",
+		"aliases": [
+			"Rev"
+		]
+	}
+]
