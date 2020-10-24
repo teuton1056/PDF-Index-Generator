@@ -6,7 +6,7 @@ import sys
 # NT and OT json files originally from https://github.com/TehShrike/books-of-the-bible
 # some alterations have been made to the original files, but the core design and much content remains the same.
     
-def extract_references(text,index_file='index_files.json',index_directory="JSON"):
+def extract_references(text,index_file='index_files.json',index_directory="aliases"):
     # this is a deprecated function which is retained in the code because it may prove useful in future.
     garbage = """[]{}(),.;':-_\\|"`~<>/?ﬁ"""
     words = text.split(' ')
@@ -31,7 +31,7 @@ def extract_references(text,index_file='index_files.json',index_directory="JSON"
     print(references)
     return references
 
-def get_idx_for_page(text,page_number,index_file='index_files.json',index_directory="JSON"):
+def get_idx_for_page(text,page_number,index_file='index_files.json',index_directory="aliases"):
     #latex: f"\\indexentry{{{match}}}{{{page_number}}}\n"
     idx_text = ""
     with open(index_file,'r') as fp:
