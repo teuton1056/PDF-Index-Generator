@@ -5,31 +5,6 @@ import sys
 
 # NT and OT json files originally from https://github.com/TehShrike/books-of-the-bible
 # some alterations have been made to the original files, but the core design and much content remains the same.
-    
-def extract_references(text: str, index_file='index_files.json', index_directory="aliases") -> list:
-    # this is a deprecated function which is retained in the code because it may prove useful in future.
-    garbage = """[]{}(),.;':-_\\|"`~<>/?ﬁ"""
-    words = text.split(' ')
-    clean_words = []
-    references = []
-    for word in words:
-        clean_words.append(word.strip(garbage).lstrip(garbage))
-    with open(index_file,'r') as fp:
-        index_files = json.load(fp)
-    for index in index_files:
-        with open(f"{index_directory}/{index}",'r') as fp:
-            idx = json.load(fp)
-        for item in idx:
-            #print(item)
-            for word in clean_words:
-                if word == item:
-                    references.append({'reference':word,'catch':item})
-                else:
-                    for alias in item['aliases']:
-                        if word == alias:
-                            references.append({'reference':word,'catch':alias})
-    print(references)
-    return references
 
 def get_idx_for_page(text: str, page_number: str,index_file='index_files.json',index_directory="aliases") -> str:
     #latex: f"\\indexentry{{{match}}}{{{page_number}}}\n"
@@ -54,16 +29,16 @@ def create_idx(fname: str,base_number=1):
     # creating a pdf file object
     pdfFileObj = open(fname, 'rb')  
     # creating a pdf reader object  
-    pdfReader = PyPDF2.PdfFileReader(pdfFileObj)  
+    pdfReader = PyPDF2.PdfReader(pdfFileObj)  
     # printing number of pages in pdf file  
     #print(pdfReader.numPages)  
-    number_of_pages = pdfReader.numPages
+    number_of_pages = len(pdfReader.pages)
     document = []
     # creating a page object  
     for number in range(number_of_pages):
-        pageObj = pdfReader.getPage(number)  
+        pageObj = pdfReader.pages[number]
         # extracting text from page  
-        text = pageObj.extractText()
+        text = pageObj.extract_text()
         #with open(f'out_{number}.txt','w',encoding='utf-8') as fp:
         #    fp.write(text)
         page = {'Relative_Number':int(number) + base_number,'raw_text':text}
