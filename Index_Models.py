@@ -11,6 +11,9 @@ class Mishnah_Tosefta_Reference:
     def __str__(self):
         return f"{self.type}{self.tractate} {self.chapter}:{self.paragraph}"
 
+    def __dict__(self):
+        return {'type':self.type,'tractate':self.tractate,'chapter':self.chapter,'paragraph':self.paragraph}
+
 class Talmud_Reference:
 
     def __init__(self, type: str, tractate: str, folio: str, page_letter: str):
@@ -27,6 +30,9 @@ class Talmud_Reference:
         return f"{self.type}{self.tractate} {self.folio}{self.page_letter}"
     
 
+    def __dict__(self):
+        return {'type':self.type,'tractate':self.tractate,'folio':self.folio,'page_letter':self.page_letter}
+
 class DSS_Reference:
 
     def __init__(self, Cave_Number: str, Manuscript_Designator: str, Column: str, Line: str, Segment_Indicator='', Use_Capital_Columns=True):
@@ -42,6 +48,15 @@ class DSS_Reference:
     
     def __repr__(self):
         return f"DSS_Reference({self.Cave_Number},{self.Manuscript_Designator},{self.Column},{self.Line},{self.Segment_Indicator},{self.Use_Capital_Columns})"
+    
+    def __dict__(self):
+        return {
+            "Cave_Number":self.Cave_Number,
+            "Manuscript_Designator":self.Manuscript_Designator,
+            "Column":self.Column,
+            "Line":self.Line,
+            "Segment_Indicator":self.Segment_Indicator,
+            "Use_Capital_Columns":self.Use_Capital_Columns}
 
 class Bible_Reference:
 
@@ -58,9 +73,21 @@ class Bible_Reference:
         
     def __repr__(self):
         return "Bible_Refence({},{},{})".format(self.book,self.chapter,self.verse)
+    
+    def __dict__(self):
+        return {'book':self.book,'chapter':self.chapter,'verse':self.verse}
 
 class Index_Entry:
 
-    def __init__(self, reference, page_number):
-        self.reference = reference
+    def __init__(self, reference, page_number: str):
+        self.reference = reference # must be a reference object, one of the above
         self.page_number = page_number
+
+    def __str__(self):
+        return f"{self.reference} {self.page_number}"
+    
+    def __repr__(self):
+        return f"Index_Entry({self.reference},{self.page_number})"
+    
+    def __dict__(self):
+        return {'reference':dict(self.reference), 'page_number':str(self.page_number)}
