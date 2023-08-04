@@ -6,7 +6,7 @@ import sys
 # NT and OT json files originally from https://github.com/TehShrike/books-of-the-bible
 # some alterations have been made to the original files, but the core design and much content remains the same.
     
-def extract_references(text,index_file='index_files.json',index_directory="aliases"):
+def extract_references(text: str, index_file='index_files.json', index_directory="aliases") -> list:
     # this is a deprecated function which is retained in the code because it may prove useful in future.
     garbage = """[]{}(),.;':-_\\|"`~<>/?ﬁ"""
     words = text.split(' ')
@@ -31,7 +31,7 @@ def extract_references(text,index_file='index_files.json',index_directory="alias
     print(references)
     return references
 
-def get_idx_for_page(text,page_number,index_file='index_files.json',index_directory="aliases"):
+def get_idx_for_page(text: str, page_number: str,index_file='index_files.json',index_directory="aliases") -> str:
     #latex: f"\\indexentry{{{match}}}{{{page_number}}}\n"
     idx_text = ""
     with open(index_file,'r') as fp:
@@ -50,7 +50,7 @@ def get_idx_for_page(text,page_number,index_file='index_files.json',index_direct
                     idx_text += f"{item['name']}|{match}|{page_number}\n"
     return idx_text
 
-def create_idx(fname,base_number=1):
+def create_idx(fname: str,base_number=1):
     # creating a pdf file object
     pdfFileObj = open(fname, 'rb')  
     # creating a pdf reader object  
