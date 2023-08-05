@@ -282,3 +282,14 @@ class Main_Parser:
             ref_logger.debug(f"Using parser {parser}")
             references.extend(parser.parse(reference_string))
         return references
+    
+    def parse_lines(self, lines: list) -> list:
+        """
+        Parses a list of lines for references
+        """
+        for i, line in enumerate(lines):
+            text = line['Raw_Text']
+            references = self.parse(text)
+            if i > 0:
+                references.extend(self.parse_over_page_break(lines[i-1]['Raw_Text'], text))
+        return references
