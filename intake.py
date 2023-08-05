@@ -1,7 +1,7 @@
 import PyPDF2
 from index_loggers import intake_logger
 
-class Intake:
+class Intake_PDF:
 
     def __init__(self, base_number=0):
         self.base_number = base_number
