@@ -233,11 +233,17 @@ class Main_Parser:
             names = ["NT", "OT", "AP"]
         for name in names:
             if name == "NT":
-                self.parsers.append(NT_Parser().load_alias_file('aliases/NT.json'))
+                parser = NT_Parser()
+                parser.load_alias_file('aliases/NT.json')
+                self.parsers.append(parser)
             elif name == "OT":
-                self.parsers.append(OT_Parser().load_alias_file('aliases/OT.json'))
+                parser = OT_Parser()
+                parser.load_alias_file('aliases/OT.json')
+                self.parsers.append(parser)
             elif name == "AP":
-                self.parsers.append(AP_Parser().load_alias_file('aliases/AP.json'))
+                parser = AP_Parser()
+                parser.load_alias_file('aliases/AP.json')
+                self.parsers.append(parser)
             elif name == "DSS":
                 self.parsers.append(DSS_Parser())
             else:
