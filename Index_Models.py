@@ -1,4 +1,4 @@
-
+from index_loggers import ref_logger
 
 class Mishnah_Tosefta_Reference:
 
@@ -78,9 +78,9 @@ class DSS_Reference:
 class Bible_Reference:
 
     def __init__(self, book, chapter, verse):
-        self.book = book
-        self.chapter = chapter
-        self.verse = verse
+        self.book = str(book)
+        self.chapter = str(chapter)
+        self.verse = str(verse)
 
     def __str__(self):
         if self.chapter == 0:
