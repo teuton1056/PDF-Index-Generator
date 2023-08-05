@@ -1,3 +1,5 @@
+
+
 class Mishnah_Tosefta_Reference:
 
     def __init__(self, type: str, tractate: str, chapter: str, paragraph: str):
@@ -8,11 +10,16 @@ class Mishnah_Tosefta_Reference:
         self.chapter = chapter
         self.paragraph = paragraph
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.type}{self.tractate} {self.chapter}:{self.paragraph}"
 
-    def __dict__(self):
+    def __dict__(self) -> dict:
         return {'type':self.type,'tractate':self.tractate,'chapter':self.chapter,'paragraph':self.paragraph}
+
+    def __eq__(self, __value: object) -> bool:
+        if type(__value) is Mishnah_Tosefta_Reference:
+            return self.__dict__() == __value.__dict__()
+        return False
 
 class Talmud_Reference:
 
@@ -26,12 +33,17 @@ class Talmud_Reference:
         if self.page_letter not in ['a','b']:
             raise Exception(f"Invalid page letter {self.page_letter}. Must be 'a' or 'b'")
         
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.type}{self.tractate} {self.folio}{self.page_letter}"
     
 
-    def __dict__(self):
+    def __dict__(self) -> dict:
         return {'type':self.type,'tractate':self.tractate,'folio':self.folio,'page_letter':self.page_letter}
+    
+    def __eq__(self, __value: object) -> bool:
+        if type(__value) is Talmud_Reference:
+            return self.__dict__() == __value.__dict__()
+        return False
 
 class DSS_Reference:
 
@@ -58,6 +70,11 @@ class DSS_Reference:
             "Segment_Indicator":self.Segment_Indicator,
             "Use_Capital_Columns":self.Use_Capital_Columns}
 
+    def __eq__(self, __value: object) -> bool:
+        if type(__value) is DSS_Reference:
+            return self.__dict__() == __value.__dict__()
+        return False
+
 class Bible_Reference:
 
     def __init__(self, book, chapter, verse):
@@ -76,6 +93,11 @@ class Bible_Reference:
     
     def __dict__(self):
         return {'book':self.book,'chapter':self.chapter,'verse':self.verse}
+
+    def __eq__(self, __value: object) -> bool:
+        if type(__value) is Bible_Reference:
+            return self.__dict__() == __value.__dict__()
+        return False
 
 class Index_Entry:
 
