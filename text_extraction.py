@@ -21,7 +21,7 @@ def get_idx_for_page(text: str, page_number: str,index_file='index_files.json',i
                 matches = re.findall(f"{alias}" + r"\.?\s\d{1,3}\.?:?\d{0,3}-?\d{0,3}", text)
                 for m in matches:
                     # we are only interested in the numerical part of the match.
-                    match = m.strip('.:;,').lstrip()[len(alias):]
+                    match = m.strip('.:;,').lstrip()[len(alias):] 
                     idx_text += f"{item['name']}|{match}|{page_number}\n"
     return idx_text
 
