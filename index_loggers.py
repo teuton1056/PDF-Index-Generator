@@ -7,7 +7,7 @@ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messag
 
 # Create the console handler
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.WARNING)
 ch.setFormatter(formatter)
 
 # Create the file handler
@@ -21,3 +21,20 @@ ref_logger.setLevel(logging.DEBUG)
 ref_logger.addHandler(ch)
 ref_logger.addHandler(fh)
 
+# creat the intake logger
+intake_logger = logging.getLogger("Intake")
+intake_logger.setLevel(logging.DEBUG)
+intake_logger.addHandler(ch)
+intake_logger.addHandler(fh)
+
+# create the formatting logger 
+format_logger = logging.getLogger("Formatting")
+format_logger.setLevel(logging.DEBUG)
+format_logger.addHandler(ch)
+format_logger.addHandler(fh)
+
+# create the main logger
+main_logger = logging.getLogger("Main")
+main_logger.setLevel(logging.DEBUG)
+main_logger.addHandler(ch)
+main_logger.addHandler(fh)
