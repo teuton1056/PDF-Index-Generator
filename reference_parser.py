@@ -287,9 +287,16 @@ class Main_Parser:
         """
         Parses a list of lines for references
         """
+        references = []
         for i, line in enumerate(lines):
-            text = line['Raw_Text']
-            references = self.parse(text)
-            if i > 0:
-                references.extend(self.parse_over_page_break(lines[i-1]['Raw_Text'], text))
+            if type(line) is str:
+                references.extend(self.parse(line))
+                if i > 0:
+                    references.extend(self.parse_over_page_break(lines[i-1], line))
+            elif type(line) is dict:
+                text = line['Raw_Text']
+                references.extend(self.parse(text))
+                if i > 0:
+                    references.extend(self.parse_over_page_break(lines[i-1]['Raw_Text'], line))
+            
         return references
