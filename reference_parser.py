@@ -256,10 +256,18 @@ class Main_Parser:
         Parses a group of text which crosses a page break, returns references found only in the union of the two page, 
         excluding references found in either page alone. This handles cases where a reference is split between two pages.
         """
-        union = self.parse(page_a_string) + self.parse(page_b_string)
+        union = self.parse(page_a_string + page_b_string)
+        ref_logger.debug(f"Found {len(union)} references in the union of the two pages")
         page_a = self.parse(page_a_string)
+        ref_logger.debug(f"Found {len(page_a)} references in page a")
         page_b = self.parse(page_b_string)
-        return [x for x in union if x not in page_a or x not in page_b]
+        ref_logger.debug(f"Found {len(page_b)} references in page b")
+        for x in page_a:
+            union.remove(x)
+        for x in page_b:
+            union.remove(x)
+        return union
+
 
     def parse(self, reference_string: str) -> list:
         """
