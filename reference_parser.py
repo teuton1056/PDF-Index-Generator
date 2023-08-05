@@ -183,3 +183,73 @@ class OT_Parser(Reference_Parser):
                 obj = self.convert_to_obj(book_name, m)
                 references.append(obj)
         return references
+    
+class DSS_Parser(Reference_Parser):
+
+    def __init__(self, configurations: dict = None):
+        super().__init__(configurations)
+        self.configurations = configurations
+
+    def convert_to_obj(self, match_string):
+        Cave_Number = re.search(r"\d{1,2}", match_string).group(0)
+        Manuscript_Designator = re.search(r"Q[A-Z]?\d{0,3}[a-z]{0,5}", match_string).group(0)
+        # remove the leading Q
+        if Manuscript_Designator[0] == "Q":
+            Manuscript_Designator = Manuscript_Designator[1:]
+        
+        segment_indicator = re.search(r"[a-z]", match_string).group(0)
+        column_number = re.search(r"[ivxIVX]{1,10}", match_string).group(0)
+        line_number = re.search(r"\d{1,3}", match_string).group(0)
+        use_captial_columns = column_number.isupper()
+        ref_logger.debug(f"Found Cave_Number {Cave_Number}")
+        ref_logger.debug(f"Found Manuscript_Designator {Manuscript_Designator}")
+        ref_logger.debug(f"Found segment indicator {segment_indicator}")
+        ref_logger.debug(f"Found column number {column_number}")
+        ref_logger.debug(f"Found line number {line_number}")
+        return Index_Models.DSS_Reference(Cave_Number, Manuscript_Designator,  column_number, line_number, Segment_Indicator=segment_indicator, Use_Capital_Columns=True)
+
+    def parse(self, reference_string: str) -> list[Index_Models.DSS_Reference]:
+        """
+        Parses a reference string for a Dead Sea Scrolls reference
+        """
+        ref_logger.debug(f"Parsing reference string {reference_string}")
+        references = []
+        matches = re.findall(r"\d{1,3}Q[A-Z]?\d{0,3}[a-z]{0,5},?\s[ivxIVX]{1,10}[.:,\s]\s?\d{1,3}", reference_string)
+        ref_logger.debug(f"Found {len(matches)} matches")
+        for m in matches:
+            ref_logger.debug(f"Converting match {m} to object")
+            reference = self.convert_to_obj(m)
+            references.append(reference)
+        return references
+    
+class Main_Parser:
+
+    def __init__(self):
+        self.parsers = []
+        self.load_parsers()
+
+    def load_parsers(self, names=[]):
+        if len(names) == 0:
+            names = ["NT", "OT", "AP"]
+        for name in names:
+            if name == "NT":
+                self.parsers.append(NT_Parser().load_alias_file())
+            elif name == "OT":
+                self.parsers.append(OT_Parser().load_alias_file())
+            elif name == "AP":
+                self.parsers.append(AP_Parser().load_alias_file())
+            elif name == "DSS":
+                self.parsers.append(DSS_Parser())
+            else:
+                ref_logger.error(f"Could not load parser {name}")
+
+    def parse(self, reference_string: str) -> list:
+        """
+        Parses a reference string for a reference
+        """
+        ref_logger.debug(f"Parsing reference string {reference_string}")
+        references = []
+        for parser in self.parsers:
+            ref_logger.debug(f"Using parser {parser}")
+            references.extend(parser.parse(reference_string))
+        return references
