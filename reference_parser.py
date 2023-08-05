@@ -224,9 +224,9 @@ class DSS_Parser(Reference_Parser):
     
 class Main_Parser:
 
-    def __init__(self):
+    def __init__(self, parser_names=[]):
         self.parsers = []
-        self.load_parsers()
+        self.load_parsers(parser_names)
 
     def load_parsers(self, names=[]):
         if len(names) == 0:
@@ -241,7 +241,9 @@ class Main_Parser:
             elif name == "DSS":
                 self.parsers.append(DSS_Parser())
             else:
-                ref_logger.error(f"Could not load parser {name}")
+                ref_logger.critical(f"Could not load parser {name}")
+                raise ValueError(f"Could not load parser {name}")
+                
 
     def parse(self, reference_string: str) -> list:
         """
