@@ -98,6 +98,9 @@ class Bible_Reference:
         if type(__value) is Bible_Reference:
             return self.__dict__() == __value.__dict__()
         return False
+    
+    def __neq__(self, __value: object) -> bool:
+        return not self.__eq__(__value)
 
 class Index_Entry:
 
