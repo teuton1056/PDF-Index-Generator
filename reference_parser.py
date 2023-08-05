@@ -249,6 +249,9 @@ class Main_Parser:
         """
         Parses a reference string for a reference
         """
+        if len(self.parsers) == 0:
+            ref_logger.critical(f"No parsers loaded")
+            raise ValueError(f"No parsers loaded")
         ref_logger.debug(f"Parsing reference string {reference_string}")
         references = []
         for parser in self.parsers:
