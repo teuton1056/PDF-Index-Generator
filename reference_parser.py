@@ -302,9 +302,7 @@ class Main_Parser:
                 with open("aliases/DSS.json") as f:
                     self.parsers.append(DSS_Parser(json.load(f)))
             else:
-                ref_logger.critical(f"Could not load parser {name}")
                 raise ValueError(f"Could not load parser {name}")
-                
 
     def parse_over_page_break(self, page_a_string: str, page_b_string: str) -> list:
         """
