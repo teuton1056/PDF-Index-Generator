@@ -186,27 +186,81 @@ class OT_Parser(Reference_Parser):
     
 class DSS_Parser(Reference_Parser):
 
-    def __init__(self, configurations: dict = None):
+    def __init__(self, configurations: dict = {}):
         super().__init__(configurations)
         self.configurations = configurations
 
     def convert_to_obj(self, match_string):
-        Cave_Number = re.search(r"\d{1,2}", match_string).group(0)
-        Manuscript_Designator = re.search(r"Q[A-Z]?\d{0,3}[a-z]{0,5}", match_string).group(0)
-        # remove the leading Q
-        if Manuscript_Designator[0] == "Q":
-            Manuscript_Designator = Manuscript_Designator[1:]
+        # compile re's
+        Cave_Number_Regex = re.compile(r"\d{1,2}")
+        Manuscript_Designator_Regex = re.compile(r"Q[A-Z]?\d{0,3}[a-z]{0,5}")
+        Alpha_Manuscript_Designator_Regex = re.compile(r"Q[A-Za-z]{0,5}")
+        Digit_Manuscript_Designator_Regex = re.compile(r"Q\d{0,3}")
+        segment_indicator_regex = re.compile(r"[a-z]")
+        column_number_regex = re.compile(r"[ivxIVX]{1,10}")
+        line_number_regex = re.compile(r"\d{1,3}")
+
+        ## find the cave number
+        Cave_Number = Cave_Number_Regex.search(match_string).group(0)
+        # remove the cave number from the match string
+        match_string = match_string[len(Cave_Number):]
         
-        segment_indicator = re.search(r"[a-z]", match_string).group(0)
-        column_number = re.search(r"[ivxIVX]{1,10}", match_string).group(0)
-        line_number = re.search(r"\d{1,3}", match_string).group(0)
+        Manuscript_Designator = None
+        # is the user has supplies a list of valid manuscript names, use it to find the manuscript designator
+        if 'valid_manuscript_names' in self.configurations and type(self.configurations['valid_manuscript_names']) is list:
+            for name in self.configurations['valid_manuscript_names']:
+                if name == match_string[:len(name)] or f"Q{name}" == match_string[:len(f"Q{name}")]:
+                    Manuscript_Designator = name
+                    if match_string[0] == 'Q':
+                        match_string = match_string[len(f"Q{name}"):]
+                    else:
+                        match_string = match_string[len(name):]
+                    break
+            if Manuscript_Designator is None:
+                ref_logger.debug(f"Could not find manuscript designator in {match_string}, trying to find a numeric manuscript designator")
+                # the user provided a list of valid manuscript names, but the manuscript designator is not in the list
+                # so we have to assume that the manuscript designator is a number
+                Manuscript_Designator = Digit_Manuscript_Designator_Regex.search(match_string).group(0)
+                match_string = match_string[len(Manuscript_Designator):]
+            # now we can look for a segment indicator
+            if match_string[0].isalpha() and match_string[0].islower():
+                segment_indicator = segment_indicator_regex.search(match_string).group(0)
+                match_string = match_string[len(segment_indicator):]
+                if Manuscript_Designator[0] == "Q":
+                    Manuscript_Designator = Manuscript_Designator[1:]
+        else:
+        # the user did not provide a list of valid identifiers: so we have to assume that there will be no segment indicator or the manuscript designator will be a number
+            ## find the manuscript designator
+            if match_string[0].isalpha():
+                Manuscript_Designator = Alpha_Manuscript_Designator_Regex.search(match_string).group(0)
+                match_string = match_string[len(Manuscript_Designator):]
+                segment_indicator = None
+            else:
+                Manuscript_Designator = Digit_Manuscript_Designator_Regex.search(match_string).group(0)
+                match_string = match_string[len(Manuscript_Designator):]
+                # if the manuscript designator is a number, the letters following it are the segment indicator
+                segment_indicator = segment_indicator_regex.search(match_string).group(0)
+                match_string = match_string[len(segment_indicator):]
+
+            # remove the leading Q from manuscript designator if it exists
+            if Manuscript_Designator[0] == "Q":
+                Manuscript_Designator = Manuscript_Designator[1:]
+
+        # find the column number
+        column_number = column_number_regex.search(match_string).group(0)
+        match_string = match_string[len(column_number):]
+
+        # find the line number
+        line_number = line_number_regex.search(match_string).group(0)
+        match_string = match_string[len(line_number):]
+
         use_captial_columns = column_number.isupper()
         ref_logger.debug(f"Found Cave_Number {Cave_Number}")
         ref_logger.debug(f"Found Manuscript_Designator {Manuscript_Designator}")
         ref_logger.debug(f"Found segment indicator {segment_indicator}")
         ref_logger.debug(f"Found column number {column_number}")
         ref_logger.debug(f"Found line number {line_number}")
-        return Index_Models.DSS_Reference(Cave_Number, Manuscript_Designator,  column_number, line_number, Segment_Indicator=segment_indicator, Use_Capital_Columns=True)
+        return Index_Models.DSS_Reference(Cave_Number, Manuscript_Designator,  column_number, line_number, Segment_Indicator=segment_indicator, Use_Capital_Columns=use_captial_columns)
 
     def parse(self, reference_string: str) -> list[Index_Models.DSS_Reference]:
         """
@@ -245,7 +299,8 @@ class Main_Parser:
                 parser.load_alias_file('aliases/AP.json')
                 self.parsers.append(parser)
             elif name == "DSS":
-                self.parsers.append(DSS_Parser())
+                with open("aliases/DSS.json") as f:
+                    self.parsers.append(DSS_Parser(json.load(f)))
             else:
                 ref_logger.critical(f"Could not load parser {name}")
                 raise ValueError(f"Could not load parser {name}")
