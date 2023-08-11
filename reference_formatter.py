@@ -1,7 +1,6 @@
 from Index_Models import Bible_Reference
-from abc import ABC, abstractmethod
 
-class Base_Reference_Formatter():
+class Base_Reference_Formatter:
 
     def __init__(self, format_config):
         self.format_config = format_config
@@ -55,14 +54,32 @@ class Bible_Reference_Formatter(Base_Reference_Formatter):
             if "book-chapter-sep" not in self.format_config:
                 self.format_config["book-chapter-sep"] = " "
 
-class Base_Index_Formatter(ABC):
+class Base_Pair_Formatter:
 
     def __init__(self, format_config):
         self.format_config = format_config
         self.parse_format_config()
 
     def parse_format_config(self):
-        raise NotImplementedError("parse_format_config() not implemented")
+        assert isinstance(self.format_config, dict), "format_config must be a dictionary"
     
     def format(self, reference_page_pair: tuple):
         raise NotImplementedError("format() not implemented")
+    
+class Bible_Pair_Formatter(Base_Pair_Formatter):
+
+    def parse_format_config(self):
+        if self.format_config == {}:
+            self.format_config = {
+                "reference_page_sep": " "
+            }
+        else:
+            if "reference_page_sep" not in self.format_config:
+                self.format_config["reference_page_sep"] = " "
+        return super().parse_format_config()
+    
+    def format(self, reference_page_pair: tuple):
+        reference = reference_page_pair[0]
+        page = reference_page_pair[1]
+        formatted_reference = Bible_Reference_Formatter(self.format_config).format(reference)
+        return f'{formatted_reference} {page}'
