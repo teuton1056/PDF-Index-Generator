@@ -17,9 +17,23 @@ class Intake_PDF:
             pageObj = pdfReader.pages[number]
             # extracting text from page  
             text = pageObj.extract_text()
+            # log the amount of text extracted
+            intake_logger.debug(f"Page {number} text length: {len(text)}")
             page = {'Raw_Number':int(number), 'Relative_Number':int(number) + self.base_number,'Raw_Text':text}
             document.append(page)
         # closing the pdf file object  
         pdfFileObj.close()
         intake_logger.debug(f"Document loaded. Number of pages: {len(document)}")
         return document
+    
+def main():
+    def load_file(file_path):
+        intake_logger.info(f"Loading file: {file_path}")
+        intake = Intake_PDF()
+        document = intake.load_pdf_file(f"{file_path}")
+        intake_logger.info(f"Document loaded. Number of pages: {len(document)}")
+    for path in ["./sample_pdfs/DG_Article.pdf", "./sample_pdfs/from_docx.pdf", "./sample_pdfs/from_latex.pdf", "./sample_pdfs/VT_Article.pdf"]:
+        load_file(path)
+
+if __name__ == '__main__':
+    main()
