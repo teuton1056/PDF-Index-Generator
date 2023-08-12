@@ -358,11 +358,8 @@ class Main_Parser:
         """
         Parses a page for references, the page dictionary must have a key 'Raw_Text' which is a string
         """
-        if 'Raw_Text' not in dict.keys():
+        if 'Raw_Text' not in page.keys():
             raise KeyError("The page dictionary must have a key 'Raw_Text'")
         page_text = page['Raw_Text']
         page_lines = page_text.split('\n')
-        page_number = page['Relative_Number']
-        if page_number == 0:
-            return self.parse_lines(page_lines)
         return self.parse_lines(page_lines)
