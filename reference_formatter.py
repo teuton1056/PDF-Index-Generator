@@ -140,7 +140,7 @@ class DSS_Pair_Formatter(Base_Pair_Formatter):
     def format(self, reference_page_pair: tuple):
         reference = reference_page_pair[0]
         page = reference_page_pair[1]
-        formatted_reference = Bible_Reference_Formatter(self.format_config).format(reference)
+        formatted_reference = DSS_Reference_Formatter(self.format_config).format(reference)
         return f'{formatted_reference} {page}'
 class Bible_Pair_Formatter(Base_Pair_Formatter):
 
