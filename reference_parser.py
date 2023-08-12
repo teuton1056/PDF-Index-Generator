@@ -352,4 +352,17 @@ class Main_Parser:
                 if i > 0:
                     references.extend(self.parse_over_page_break(lines[i-1]['Raw_Text'], line))
             
-        return references
+        return references 
+    
+    def parse_page(self, page: dict) -> list:
+        """
+        Parses a page for references, the page dictionary must have a key 'Raw_Text' which is a string
+        """
+        if 'Raw_Text' not in dict.keys():
+            raise KeyError("The page dictionary must have a key 'Raw_Text'")
+        page_text = page['Raw_Text']
+        page_lines = page_text.split('\n')
+        page_number = page['Relative_Number']
+        if page_number == 0:
+            return self.parse_lines(page_lines)
+        return self.parse_lines(page_lines)
