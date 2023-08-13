@@ -89,7 +89,7 @@ class Bible_Reference:
             return f"{self.book} {self.chapter}:{self.verse}"
         
     def __repr__(self):
-        return "Bible_Refence({},{},{})".format(self.book,self.chapter,self.verse)
+        return "Bible_Reference({},{},{})".format(self.book,self.chapter,self.verse)
     
     def __dict__(self):
         return {'book':self.book,'chapter':self.chapter,'verse':self.verse}
