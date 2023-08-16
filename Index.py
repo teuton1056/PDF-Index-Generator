@@ -49,12 +49,6 @@ class Index:
         """
         pass # TODO
 
-    def sort_entries(self, group):
-        """
-        Sorts entries by reference.
-        """
-        pass # TODO
-
     def load_sort_order(self, sorting):
         index_logger.debug(f"Loading sort order for {sorting}")
         if sorting == 'NT':
