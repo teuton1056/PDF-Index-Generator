@@ -29,7 +29,7 @@ class Index:
     The Index class is a top-level class which contains all the index entries (Index_Entry objects).
     """
 
-    def __init__(self, index_entries):
+    def __init__(self, index_entries = []):
         self.entries = index_entries
         self.formatters = {
             Index_Models.Bible_Reference: reference_formatter.Bible_Reference_Formatter({}),
