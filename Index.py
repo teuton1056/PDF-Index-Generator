@@ -3,6 +3,15 @@ import Index_Models
 import json
 from index_loggers import index_logger
 
+def create_index_entries(refs: list, page: int) -> list:
+    """
+    Creates a list of index entries from a list of references.
+    """
+    entries = []
+    for ref in refs:
+        entries.append(Index_Entry(ref, page))
+    return entries
+
 class Index_Entry:
 
     def __init__(self, reference, page):
