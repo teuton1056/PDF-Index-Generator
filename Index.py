@@ -43,6 +43,12 @@ class Index:
             entry.formatted_reference = self.formatters[type(entry.reference)].format(entry.reference)
             entry.formatted_entry = entry.formatted_reference + ", " + str(entry.page)
 
+    def add_entries(self, entries: list):
+        """
+        Adds entries to index.
+        """
+        self.entries.extend(entries)
+
     def sub_group_entries(self, group, tag):
         """
         Sub-groups entries by tag.
