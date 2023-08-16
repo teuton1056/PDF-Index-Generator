@@ -38,3 +38,9 @@ main_logger = logging.getLogger("Main")
 main_logger.setLevel(logging.DEBUG)
 main_logger.addHandler(ch)
 main_logger.addHandler(fh)
+
+# create the index logger
+index_logger = logging.getLogger("Index")
+index_logger.setLevel(logging.DEBUG)
+index_logger.addHandler(ch)
+index_logger.addHandler(fh)
