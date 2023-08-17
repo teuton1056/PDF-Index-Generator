@@ -99,7 +99,7 @@ class Index:
         index_logger.debug(f"Group Before Any Sorting: {group}")
         group.sort(key=lambda x: x.formatted_reference)
         index_logger.debug(f"Group After Initial Alphabetical Sort: {group}")
-        group.sort(key=lambda x: order[x.reference.book])
+        group.sort(key=lambda x: int(order[x.reference.book]))
         index_logger.debug(f"Group After Book Sort: {group}")
         return group
 
