@@ -228,6 +228,8 @@ class DSS_Parser(Reference_Parser):
                 match_string = match_string[len(segment_indicator):]
                 if Manuscript_Designator[0] == "Q":
                     Manuscript_Designator = Manuscript_Designator[1:]
+            else:
+                segment_indicator = None # there is no segment indicator
         else:
         # the user did not provide a list of valid identifiers: so we have to assume that there will be no segment indicator or the manuscript designator will be a number
             ## find the manuscript designator
