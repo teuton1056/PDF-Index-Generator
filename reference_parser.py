@@ -372,3 +372,17 @@ class Main_Parser:
         page_text = page['Raw_Text']
         page_lines = page_text.split('\n')
         return self.parse_lines(page_lines)
+    
+    def parse_document(self, document: list) -> list:
+        """
+        Parses a document for references, the document must be a list of page dictionaries
+        """
+        references = []
+        for i, page in enumerate(document):
+            references.extend(self.parse_page(page))
+            if i > 0:
+                references.extend(self.parse_over_page_break(document[i-1]['Raw_Text'], page['Raw_Text']))
+
+        for page in document:
+            references.extend(self.parse_page(page))
+        return references
