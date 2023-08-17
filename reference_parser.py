@@ -311,6 +311,8 @@ class Main_Parser:
         Parses a group of text which crosses a page break, returns references found only in the union of the two page, 
         excluding references found in either page alone. This handles cases where a reference is split between two pages.
         """
+        page_a_string = page_a_string.strip()
+        page_b_string = page_b_string.lstrip()
         if page_a_string[-1] != ' ' and page_b_string[0] != ' ':
             ref_logger.debug(f"Adding space between page a and page b")
             page_a_string += ' '
@@ -375,16 +377,15 @@ class Main_Parser:
         page_lines = page_text.split('\n')
         return self.parse_lines(page_lines)
     
-    def parse_document(self, document: list) -> list:
+    def parse_document(self, document: list) -> dict:
         """
         Parses a document for references, the document must be a list of page dictionaries
+        It returns a dictionary of page numbers to lists of references
         """
-        references = []
+        references = {}
         for i, page in enumerate(document):
-            references.extend(self.parse_page(page))
+            current_page_references = self.parse_page(page)
             if i > 0:
-                references.extend(self.parse_over_page_break(document[i-1]['Raw_Text'], page['Raw_Text']))
-
-        for page in document:
-            references.extend(self.parse_page(page))
+                current_page_references.extend(self.parse_over_page_break(document[i-1]['Raw_Text'], page['Raw_Text']))
+            references[page['Relative_Number']] = current_page_references
         return references
