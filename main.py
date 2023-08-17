@@ -3,8 +3,9 @@ import reference_parser
 from index_loggers import main_logger 
 from Index import Index, Index_Entry, create_index_entries
 import time 
+import sys
 
-def main(fname="sample_pdfs/test_1.pdf"):
+def main(fname="sample_pdfs/test_1.pdf", base_number=1):
     t = time.time()
     main_logger.info("Starting program")
     intake_obj = intake.Intake_PDF(base_number=1)
@@ -23,4 +24,14 @@ def main(fname="sample_pdfs/test_1.pdf"):
     main_logger.info("Time elapsed: " + str(time.time() - t))
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) == 1:
+        print("Running with default values")
+        main()
+    elif len(sys.argv) == 2:
+        print("Running without a base number")
+        main(fname=sys.argv[1])   
+    elif len(sys.argv) == 3:
+        main(sys.argv[1], sys.argv[2])
+    else:
+        print("Too many arguments")
+        sys.exit(1)
