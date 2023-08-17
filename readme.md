@@ -1,26 +1,21 @@
 # PDF Index Extraction
-Basically, after hearing that this was something people would pay $100s of dollars for, I figured that it wouldn't be that hard to do a modest job of it, of which is this the result.
-
+This program generates an index of Biblical references and other references common in Old/New Testament scholarship. 
 ## Information
-
 ### Dependencies
-This program uses PyPDF2 for pulling information from the PDF and XeLaTeX for formatting and generating a new pdf. Python is used as the main language.
+This program uses PyPDF2 for pulling information from the PDF and the python standard library for everything else.
 
 ### Limitations
-The program pulls whatever text is embedded in the pdf, I have tested it on a number of pdfs and I've found that only ones I have downloaded from publishers seem to work. Given that this is a significant part of the purpose this limitation doesn't bother me too much.
+The program pulls whatever text is embedded in the pdf. This means that if the text is not embedded, or if the text is not in the correct order, the program will not work. This is espeically true of scanned content.
 
 ### Output
-The basic output is just a list of references in the correct order. Improvements could be made by either editing the TeX document that is produced or by improving the makeindex.py script.
+The basic output is just a list of references in the correct order, by default this will appear in the base directory as "index.txt".
 
 ### Use
-Call the script text_extraction.py, pass in the path-to-file of the target pdf and the base page number from which the program will count. This program generates a references.pidx file which is read when you run makeindex.py. This function will generate a .tex file named "Index.tex" by default. 
+You can use the main.py script with arguments to change the input file. Minor modifications to the script will allow multiple input files. Also note the need to specify the base page number if the PDF is not paginated from 1. 
 
 ### Modification and Extension
-Most of the decisions which are made by the program are based on one of the several JSON files in the directory. The special group in directory "aliases" are used to identify references. Adding to these files will add to the number of matches which can be made. The three files named X_Order.json inform the program which order to place the references in. 
-
+Expansion of the alias files in the aliases directory will improve the behavior of the program. The program is designed to be easily modified to include additional aliases. 
+I plan to improve the configruability of the formatters in the future and eventually add a .tex and possibily other outputs.
 ## License 
-I have released this under the GNU Public License v.3. Meaning, in short, that so long as this remains free software you may do what you like with it.
-
-## Possible Extensions
-I may extend this to generate a more conventional index using some of the tools provided by LaTeX. I would also like to add in a DSS aliases file.
+GPLv3
 
