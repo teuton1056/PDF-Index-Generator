@@ -33,15 +33,3 @@ class Intake_PDF:
         pdfFileObj.close()
         intake_logger.debug(f"Document loaded. Number of pages: {len(document)}")
         return document
-    
-def main():
-    def load_file(file_path):
-        intake_logger.info(f"Loading file: {file_path}")
-        intake = Intake_PDF()
-        document = intake.load_pdf_file(f"{file_path}")
-        intake_logger.info(f"Document loaded. Number of pages: {len(document)}")
-    for path in ["./sample_pdfs/DG_Article.pdf", "./sample_pdfs/from_docx.pdf", "./sample_pdfs/from_latex.pdf", "./sample_pdfs/VT_Article.pdf"]:
-        load_file(path)
-
-if __name__ == '__main__':
-    main()
