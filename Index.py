@@ -111,6 +111,8 @@ class Index:
         output = ""
         groups = self.group_entries()
         for group in groups:
+            if output != "":
+                output += "" # TODO: provide a way to separate groups
             self.format_group(groups[group])
             order = self.load_sort_order(group.__name__)
             if order != {}:
