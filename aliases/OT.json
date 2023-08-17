@@ -1,285 +1,119 @@
 [
-	{
-		"name": "Genesis",
-		"aliases": [
-			"Gen",
-			"Gn"
-		]
-	},
-	{
-		"name": "Exodus",
-		"aliases": [
-			"Exod",
-			"Ex",
-			"Exo"
-		]
-	},
-	{
-		"name": "Leviticus",
-		"aliases": [
-			"Lev",
-			"Lv"
-		]
-	},
-	{
-		"name": "Numbers",
-		"aliases": [
-			"Num"
-		]
-	},
-	{
-		"name": "Deuteronomy",
-		"aliases": [
-			"Deut"
-		]
-	},
-	{
-		"name": "Joshua",
-		"aliases": [
-			"Josh"
-		]
-	},
-	{
-		"name": "Judges",
-		"aliases": [
-			"Judg"
-		]
-	},
-	{
-		"name": "Ruth",
-		"aliases": []
-	},
-	{
-		"name": "1 Samuel",
-		"aliases": [
-			"1 Sam",
-			"1st Sam",
-			"1st Samuel",
-			"First Samuel"
-		]
-	},
-	{
-		"name": "2 Samuel",
-		"aliases": [
-			"2 Sam",
-			"2nd Sam",
-			"2nd Samuel",
-			"Second Samuel"
-		]
-	},
-	{
-		"name":"1-2 Samuel",
-		"aliases":["1-2 Sam"]
-	},
-	{
-		"name":"1 Kingdoms",
-		"aliases":["1 Kgdms"]
-	},
-	{
-		"name":"2 Kingdoms",
-		"aliases":["2 Kgdms"]
-	},
-	{
-		"name":"1-2 Kingdoms",
-		"aliases":["1-2 Kgdms"]
-	},
-	{
-		"name": "1 Kings",
-		"aliases": [
-			"1 Kgs",
-			"1st Kgs",
-			"1st Kings",
-			"First Kings"
-		]
-	},
-	{
-		"name": "2 Kings",
-		"aliases": [
-			"2 Kgs",
-			"2nd Kgs",
-			"2nd Kings",
-			"Second Kings"
-		]
-	},
-	{
-		"name":"1-2 Kings",
-		"aliases":["1-2 Kgs"]
-	},
-	{
-		"name": "1 Chronicles",
-		"aliases": [
-			"1 Chr",
-			"1st Chr",
-			"1st Chronicles",
-			"First Chronicles"
-		]
-	},
-	{
-		"name": "2 Chronicles",
-		"aliases": [
-			"2 Chr",
-			"2nd Chr",
-			"2nd Chronicles",
-			"Second Chronicles"
-		]
-	},
-	{
-		"name":"1-2 Chronicles",
-		"aliases":["1-2 Chr"]
-	},
-	{
-		"name": "Ezra",
-		"aliases": [
-			"Ezra",
-			"Ez"
-		]
-	},
-	{
-		"name": "Nehemiah",
-		"aliases": [
-			"Neh",
-			"Ne"
-		]
-	},
-	{
-		"name": "Esther",
-		"aliases": [
-			"Esth",
-			"Est"
-		]
-	},
-	{
-		"name": "Job",
-		"aliases": ["Jb"]
-	},
-	{
-		"name": "Psalms",
-		"aliases": [
-			"Ps",
-			"Pss",
-			"Psalm"
-		]
-	},
-	{
-		"name": "Proverbs",
-		"aliases": [
-			"Prov",
-			"Pro"
-		]
-	},
-	{
-		"name": "Ecclesiastes",
-		"aliases": [
-			"Eccl",
-			"Ecc",
-			"Qoh"
-		]
-	},
-	{
-		"name": "Song of Solomon",
-		"aliases": [
-			"Song",
-			"Song of Songs",
-			"Cant"
-		]
-	},
-	{
-		"name": "Isaiah",
-		"aliases": [
-			"Isa"
-		]
-	},
-	{
-		"name": "Jeremiah",
-		"aliases": [
-			"Jer"
-		]
-	},
-	{
-		"name": "Lamentations",
-		"aliases": [
-			"Lam"
-		]
-	},
-	{
-		"name": "Ezekiel",
-		"aliases": [
-			"Ezek"
-		]
-	},
-	{
-		"name": "Daniel",
-		"aliases": [
-			"Dan"
-		]
-	},
-	{
-		"name": "Hosea",
-		"aliases": [
-			"Hos"
-		]
-	},
-	{
-		"name": "Joel",
-		"aliases": []
-	},
-	{
-		"name": "Amos",
-		"aliases": []
-	},
-	{
-		"name": "Obadiah",
-		"aliases": [
-			"Obad",
-			"Oba"
-		]
-	},
-	{
-		"name": "Jonah",
-		"aliases": [
-			"Jon"
-		]
-	},
-	{
-		"name": "Micah",
-		"aliases": [
-			"Mic"
-		]
-	},
-	{
-		"name": "Nahum",
-		"aliases": [
-			"Nah"
-		]
-	},
-	{
-		"name": "Habakkuk",
-		"aliases": [
-			"Hab"
-		]
-	},
-	{
-		"name": "Zephaniah",
-		"aliases": [
-			"Zeph"
-		]
-	},
-	{
-		"name": "Haggai",
-		"aliases": [
-			"Hag"
-		]
-	},
-	{
-		"name": "Zechariah",
-		"aliases": [
-			"Zech"
-		]
-	},
-	{
-		"name": "Malachi",
-		"aliases": [
-			"Mal"
-		]
-	}
+    {"Gen": "Genesis"}, 
+    {"Gn": "Genesis"}, 
+    {"Genesis": "Genesis"},
+    {"Exod": "Exodus"}, 
+    {"Ex": "Exodus"}, 
+    {"Exo": "Exodus"}, 
+    {"Exodus": "Exodus"},
+    {"Lev": "Leviticus"}, 
+    {"Lv": "Leviticus"}, 
+    {"Leviticus": "Leviticus"},
+    {"Num": "Numbers"}, 
+    {"Numbers":"Numbers"},
+    {"Dt":"Deuteronomy"},
+    {"Deut": "Deuteronomy"},
+    {"Deuteronomy":"Deuteronomy"},
+    {"Josh": "Joshua"}, 
+    {"Joshua":"Joshua"},
+    {"Judg": "Judges"}, 
+    {"Judges":"Judges"},
+    {"1 Sam": "1 Samuel"},
+    {"1 Samuel": "1 Samuel"}, 
+    {"1st Sam": "1 Samuel"}, 
+    {"1st Samuel": "1 Samuel"}, 
+    {"First Samuel": "1 Samuel"}, 
+    {"2 Sam": "2 Samuel"}, 
+    {"2 Samuel": "2 Samuel"},
+    {"2nd Sam": "2 Samuel"}, 
+    {"2nd Samuel": "2 Samuel"}, 
+    {"Second Samuel": "2 Samuel"}, 
+    {"1-2 Sam": "1-2 Samuel"}, 
+    {"1 Kgdms": "1 Kingdoms"}, 
+    {"2 Kgdms": "2 Kingdoms"}, 
+    {"1-2 Kgdms": "1-2 Kingdoms"}, 
+    {"1 Kgs": "1 Kings"}, 
+    {"1st Kgs": "1 Kings"}, 
+    {"1st Kings": "1 Kings"}, 
+    {"First Kings": "1 Kings"}, 
+    {"1 Kings": "1 Kings"},
+    {"2 Kgs": "2 Kings"}, 
+    {"2nd Kgs": "2 Kings"}, 
+    {"2nd Kings": "2 Kings"}, 
+    {"Second Kings": "2 Kings"}, 
+    {"2 Kings": "2 Kings"},
+    {"1-2 Kgs": "1-2 Kings"}, 
+    {"1 Chr": "1 Chronicles"}, 
+    {"1st Chr": "1 Chronicles"}, 
+    {"1st Chronicles": "1 Chronicles"}, 
+    {"First Chronicles": "1 Chronicles"}, 
+    {"2 Chr": "2 Chronicles"}, 
+    {"2nd Chr": "2 Chronicles"}, 
+    {"2nd Chronicles": "2 Chronicles"}, 
+    {"2 Chronicles": "2 Chronicles"},
+    {"Second Chronicles": "2 Chronicles"}, 
+    {"1-2 Chr": "1-2 Chronicles"}, 
+    {"Ezra": "Ezra"}, 
+    {"Ez": "Ezra"}, 
+    {"Neh": "Nehemiah"}, 
+    {"Ne": "Nehemiah"}, 
+    {"Esth": "Esther"}, 
+    {"Est": "Esther"}, 
+    {"Esther": "Esther"}, 
+    {"Job": "Job"},
+    {"Jb": "Job"}, 
+    {"Ps": "Psalms"}, 
+    {"Pss": "Psalms"}, 
+    {"Psalm": "Psalms"},
+    {"Psalms": "Psalms"},
+    {"Prv": "Proverbs"}, 
+    {"Prov": "Proverbs"}, 
+    {"Pro": "Proverbs"}, 
+    {"Proverbs": "Proverbs"},
+    {"Ecclesiastes": "Ecclesiastes"},
+    {"Eccl": "Ecclesiastes"}, 
+    {"Ecc": "Ecclesiastes"}, 
+    {"Qoh": "Ecclesiastes"}, 
+    {"Qohelet": "Ecclesiastes"},
+    {"Song": "Song of Solomon"}, 
+    {"Song of Songs": "Song of Solomon"}, 
+    {"Cant": "Song of Solomon"}, 
+    {"Song of Solomon":"Song of Solomon"},
+    {"Is":"Isaiah"},
+    {"Isa": "Isaiah"}, 
+    {"Isaiah": "Isaiah"},
+    {"Jer": "Jeremiah"}, 
+    {"Jeremiah":"Jeremiah"},
+    {"Lam": "Lamentations"}, 
+    {"Lamentations":"Lamentations"},
+    {"Ezek": "Ezekiel"}, 
+    {"Ezekiel":"Ezekiel"},
+    {"Dan": "Daniel"}, 
+    {"Daniel":"Daniel"},
+    {"Hos": "Hosea"}, 
+    {"Hosea":"Hosea"},
+    {"Joel": "Joel"}, 
+    {"Jl": "Joel"}, 
+    {"Am": "Amos"}, 
+    {"Amos":"Amos"},
+    {"Ob": "Obadiah"},
+    {"Obad": "Obadiah"}, 
+    {"Oba": "Obadiah"}, 
+    {"Obadiah": "Obadiah"},
+    {"Jon": "Jonah"}, 
+    {"Jonah":"Jonah"},
+    {"Mic": "Micah"}, 
+    {"Micah":"Micah"},
+    {"Nah": "Nahum"}, 
+    {"Nahum":"Nahum"},
+    {"Hab": "Habakkuk"},
+    {"Habakkuk":"Habakkuk"}, 
+    {"Zeph": "Zephaniah"}, 
+    {"Zephaniah":"Zephaniah"},
+    {"Hag": "Haggai"}, 
+    {"Haggai":"Haggai"},
+    {"Zech": "Zechariah"}, 
+    {"Zechariah":"Zechariah"},
+    {"Mal": "Malachi"},
+    {"Malachi":"Malachi"}
 ]
