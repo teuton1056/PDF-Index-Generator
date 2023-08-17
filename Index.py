@@ -7,6 +7,7 @@ def create_index_entries(refs: list, page: int) -> list:
     """
     Creates a list of index entries from a list of references.
     """
+    index_logger.debug(f"Creating {len(refs)} index entries for page {page}")
     entries = []
     for ref in refs:
         entries.append(Index_Entry(ref, page))
@@ -21,7 +22,10 @@ class Index_Entry:
         self.formatted_entry = None
 
     def __str__(self):
-        return self.reference + " " + str(self.page)
+        return str(self.reference) + " " + str(self.page)
+    
+    def __repr__(self):
+        return str(self.reference) + " " + str(self.page)
 
 class Index:
 
@@ -64,7 +68,7 @@ class Index:
         """
         pass # TODO
 
-    def load_sort_order(self, sorting):
+    def load_sort_order(self, sorting: str) -> dict:
         index_logger.debug(f"Loading sort order for {sorting}")
         if sorting == 'NT':
             order = self.load_sort_order_from_file('NT')
@@ -81,23 +85,29 @@ class Index:
         else:
             return {}
     
-    def load_sort_order_from_file(self, name):
+    def load_sort_order_from_file(self, name: str) -> dict:
         with open(f"sort_order/{name}.json", 'r') as f:
             sort_order = json.load(f) 
         return sort_order
     
-    def sort_entries_by_order(self, group: list, order: str) -> list:
+    def sort_entries_by_order(self, group: list, order: dict) -> list:
         """
         Sorts entries by reference.
         """
+        index_logger.debug("Sorting entries by order")
+        index_logger.debug(f"Order: {order}")
+        index_logger.debug(f"Group Before Any Sorting: {group}")
         group.sort(key=lambda x: x.formatted_reference)
+        index_logger.debug(f"Group After Initial Alphabetical Sort: {group}")
         group.sort(key=lambda x: order[x.reference.book])
+        index_logger.debug(f"Group After Book Sort: {group}")
         return group
 
-    def _txt_format(self):
+    def _txt_format(self) -> str:
         """
         Formats index for .txt file.
         """
+        index_logger.debug("Formatting index for .txt file")
         output = ""
         groups = self.group_entries()
         for group in groups:
@@ -111,7 +121,7 @@ class Index:
                 output += entry.formatted_entry + "\n"
         return output
     
-    def format_index(self, format_type):
+    def format_index(self, format_type: str) -> str:
         """
         Formats index.
         """

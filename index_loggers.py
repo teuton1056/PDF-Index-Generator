@@ -3,7 +3,7 @@ import sys
 
 
 # create the formatter 
-formatter = logging.Formatter(u"%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(funcName)s - %(lineno)d")
+formatter = logging.Formatter(u"%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(funcName)s @ %(module)s -> %(lineno)d")
 
 # Create the console handler
 ch = logging.StreamHandler()
