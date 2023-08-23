@@ -1,9 +1,11 @@
-import logging 
-import sys 
+import logging
+import sys
 
 
-# create the formatter 
-formatter = logging.Formatter(u"%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(funcName)s @ %(module)s -> %(lineno)d")
+# create the formatter
+formatter = logging.Formatter(
+    "%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(funcName)s @ %(module)s -> %(lineno)d"
+)
 
 # Create the console handler
 ch = logging.StreamHandler()
@@ -11,7 +13,7 @@ ch.setLevel(logging.WARNING)
 ch.setFormatter(formatter)
 
 # Create the file handler
-fh = logging.FileHandler('Index Generation.log', encoding='utf-8')
+fh = logging.FileHandler("Index Generation.log", encoding="utf-8")
 fh.setLevel(logging.DEBUG)
 fh.setFormatter(formatter)
 
@@ -27,7 +29,7 @@ intake_logger.setLevel(logging.DEBUG)
 intake_logger.addHandler(ch)
 intake_logger.addHandler(fh)
 
-# create the formatting logger 
+# create the formatting logger
 format_logger = logging.getLogger("Formatting")
 format_logger.setLevel(logging.DEBUG)
 format_logger.addHandler(ch)

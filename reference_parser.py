@@ -1,7 +1,8 @@
-import json 
+import json
 from index_loggers import ref_logger
-import re 
+import re
 import Index_Models
+
 
 class Reference_Parser:
 
@@ -17,7 +18,7 @@ class Reference_Parser:
         The base method for parsing a reference string
         """
         raise NotImplementedError("The parse method must be implemented by a subclass")
-    
+
     def load_alias_file(self, fname):
         try:
             with open(fname) as f:
@@ -26,8 +27,20 @@ class Reference_Parser:
             ref_logger.error(f"Could not find alias file {fname}")
             self.alias_dict = {}
 
-class AP_Parser(Reference_Parser):
 
+class Mishnah_Tosefta_Parser(Reference_Parser):
+    def __init__(self, configurations: dict = None):
+        super().__init__(configurations)
+        self.configurations = configurations
+
+    def convert_to_obj(self, book, match_string):
+        pass
+
+    def parse(self, reference_string: str):
+        pass
+
+
+class AP_Parser(Reference_Parser):
     def __init__(self, configurations: dict = None):
         super().__init__(configurations)
         self.configurations = configurations
@@ -35,7 +48,9 @@ class AP_Parser(Reference_Parser):
     def convert_to_obj(self, book, match_string, one_chapter_book=False):
         ref_logger.debug(f"Converting match string {match_string} to object")
         # the input string is known to be a valid reference
-        chapter_verse = re.search(r"\d{1,3}\.?:?\d{0,3}-?\d{0,3}", match_string).group(0)
+        chapter_verse = re.search(r"\d{1,3}\.?:?\d{0,3}-?\d{0,3}", match_string).group(
+            0
+        )
         numbers = re.findall(r"\d{1,3}", chapter_verse)
         if book in ("Philemon", "2 John", "3 John", "Jude"):
             # these books only have one chapter
@@ -59,9 +74,11 @@ class AP_Parser(Reference_Parser):
             # something went wrong
             ref_logger.error(f"Could not parse reference {match_string}")
             return None
-        ref_logger.debug(f"Returning object {Index_Models.Bible_Reference(book, chapter, verse)}")
+        ref_logger.debug(
+            f"Returning object {Index_Models.Bible_Reference(book, chapter, verse)}"
+        )
         return Index_Models.Bible_Reference(book, chapter, verse)
-    
+
     def parse(self, reference_string: str) -> list[Index_Models.Bible_Reference]:
         """
         Parses a reference string for a New Testament reference
@@ -70,15 +87,17 @@ class AP_Parser(Reference_Parser):
         reference = []
         for alias in self.alias_dict:
             a = list(alias.keys())[0]
-            matches = re.findall(f"{a}" + r"\.?\s\d{1,3}\.?:?\d{0,3}-?\d{0,3}", reference_string)
+            matches = re.findall(
+                f"{a}" + r"\.?\s\d{1,3}\.?:?\d{0,3}-?\d{0,3}", reference_string
+            )
             ref_logger.debug(f"Found {len(matches)} matches for alias {a}")
             for match in matches:
                 ref_logger.debug(f"Converting match {match} to object")
                 reference.append(self.convert_to_obj(alias[a], match))
         return reference
+
 
 class NT_Parser(Reference_Parser):
-
     def __init__(self, configurations: dict = None):
         super().__init__(configurations)
         self.configurations = configurations
@@ -86,7 +105,9 @@ class NT_Parser(Reference_Parser):
     def convert_to_obj(self, book, match_string, one_chapter_book=False):
         ref_logger.debug(f"Converting match string {match_string} to object")
         # the input string is known to be a valid reference
-        chapter_verse = re.search(r"\d{1,3}\.?:?\d{0,3}-?\d{0,3}", match_string).group(0)
+        chapter_verse = re.search(r"\d{1,3}\.?:?\d{0,3}-?\d{0,3}", match_string).group(
+            0
+        )
         numbers = re.findall(r"\d{1,3}", chapter_verse)
         if book in ("Philemon", "2 John", "3 John", "Jude"):
             # these books only have one chapter
@@ -110,9 +131,9 @@ class NT_Parser(Reference_Parser):
             # something went wrong
             ref_logger.error(f"Could not parse reference {match_string}")
             return None
-        
+
         return Index_Models.Bible_Reference(book, chapter, verse)
-    
+
     def parse(self, reference_string: str) -> list[Index_Models.Bible_Reference]:
         """
         Parses a reference string for a New Testament reference
@@ -121,15 +142,17 @@ class NT_Parser(Reference_Parser):
         reference = []
         for alias in self.alias_dict:
             a = list(alias.keys())[0]
-            matches = re.findall(f"{a}" + r"\.?\s\d{1,3}\.?:?\d{0,3}-?\d{0,3}", reference_string)
+            matches = re.findall(
+                f"{a}" + r"\.?\s\d{1,3}\.?:?\d{0,3}-?\d{0,3}", reference_string
+            )
             ref_logger.debug(f"Found {len(matches)} matches for alias {a}")
             for match in matches:
                 ref_logger.debug(f"Converting match {match} to object")
                 reference.append(self.convert_to_obj(alias[a], match))
         return reference
 
-class OT_Parser(Reference_Parser):
 
+class OT_Parser(Reference_Parser):
     def __init__(self, configurations: dict = None):
         super().__init__(configurations)
         self.configurations = configurations
@@ -141,7 +164,9 @@ class OT_Parser(Reference_Parser):
         if book == "Obadiah":
             # the book of Obadiah only has one chapter
             one_chapter_book = True
-        chapter_verse = re.search(r"\d{1,3}\.?:?\d{0,3}-?\d{0,3}", match_string).group(0)
+        chapter_verse = re.search(r"\d{1,3}\.?:?\d{0,3}-?\d{0,3}", match_string).group(
+            0
+        )
         numbers = re.findall(r"\d{1,3}", chapter_verse)
         if len(numbers) == 1:
             # only a chapter number was found
@@ -155,7 +180,7 @@ class OT_Parser(Reference_Parser):
         elif len(numbers) == 2:
             # a chapter and verse number were found
             chapter = numbers[0]
-            verse = numbers[1] 
+            verse = numbers[1]
         elif len(numbers) == 3:
             # a chapter and verse range were found
             chapter = numbers[0]
@@ -175,7 +200,9 @@ class OT_Parser(Reference_Parser):
         references = []
         for alias in self.alias_dict:
             a = list(alias.keys())[0]
-            matches = re.findall(f"{a}" + r"\.?\s\d{1,3}\.?:?\d{0,3}-?\d{0,3}", reference_string)
+            matches = re.findall(
+                f"{a}" + r"\.?\s\d{1,3}\.?:?\d{0,3}-?\d{0,3}", reference_string
+            )
             ref_logger.debug(f"Found {len(matches)} matches for alias {a}")
             for m in matches:
                 book_name = alias[a]
@@ -183,9 +210,9 @@ class OT_Parser(Reference_Parser):
                 obj = self.convert_to_obj(book_name, m)
                 references.append(obj)
         return references
-    
-class DSS_Parser(Reference_Parser):
 
+
+class DSS_Parser(Reference_Parser):
     def __init__(self, configurations: dict = {}):
         super().__init__(configurations)
         self.configurations = configurations
@@ -203,46 +230,64 @@ class DSS_Parser(Reference_Parser):
         ## find the cave number
         Cave_Number = Cave_Number_Regex.search(match_string).group(0)
         # remove the cave number from the match string
-        match_string = match_string[len(Cave_Number):]
-        
+        match_string = match_string[len(Cave_Number) :]
+
         Manuscript_Designator = None
         # is the user has supplies a list of valid manuscript names, use it to find the manuscript designator
-        if 'valid_manuscript_names' in self.configurations and type(self.configurations['valid_manuscript_names']) is list:
-            for name in self.configurations['valid_manuscript_names']:
-                if name == match_string[:len(name)] or f"Q{name}" == match_string[:len(f"Q{name}")]:
+        if (
+            "valid_manuscript_names" in self.configurations
+            and type(self.configurations["valid_manuscript_names"]) is list
+        ):
+            for name in self.configurations["valid_manuscript_names"]:
+                if (
+                    name == match_string[: len(name)]
+                    or f"Q{name}" == match_string[: len(f"Q{name}")]
+                ):
                     Manuscript_Designator = name
-                    if match_string[0] == 'Q':
-                        match_string = match_string[len(f"Q{name}"):]
+                    if match_string[0] == "Q":
+                        match_string = match_string[len(f"Q{name}") :]
                     else:
-                        match_string = match_string[len(name):]
+                        match_string = match_string[len(name) :]
                     break
             if Manuscript_Designator is None:
-                ref_logger.debug(f"Could not find manuscript designator in {match_string}, trying to find a numeric manuscript designator")
+                ref_logger.debug(
+                    f"Could not find manuscript designator in {match_string}, trying to find a numeric manuscript designator"
+                )
                 # the user provided a list of valid manuscript names, but the manuscript designator is not in the list
                 # so we have to assume that the manuscript designator is a number
-                Manuscript_Designator = Digit_Manuscript_Designator_Regex.search(match_string).group(0)
-                match_string = match_string[len(Manuscript_Designator):]
+                Manuscript_Designator = Digit_Manuscript_Designator_Regex.search(
+                    match_string
+                ).group(0)
+                match_string = match_string[len(Manuscript_Designator) :]
             # now we can look for a segment indicator
             if match_string[0].isalpha() and match_string[0].islower():
-                segment_indicator = segment_indicator_regex.search(match_string).group(0)
-                match_string = match_string[len(segment_indicator):]
+                segment_indicator = segment_indicator_regex.search(match_string).group(
+                    0
+                )
+                match_string = match_string[len(segment_indicator) :]
                 if Manuscript_Designator[0] == "Q":
                     Manuscript_Designator = Manuscript_Designator[1:]
             else:
-                segment_indicator = None # there is no segment indicator
+                segment_indicator = None  # there is no segment indicator
         else:
-        # the user did not provide a list of valid identifiers: so we have to assume that there will be no segment indicator or the manuscript designator will be a number
+            # the user did not provide a list of valid identifiers: so we have to assume that there will be no segment indicator or the manuscript designator will be a number
             ## find the manuscript designator
             if match_string[0].isalpha():
-                Manuscript_Designator = Alpha_Manuscript_Designator_Regex.search(match_string).group(0)
-                match_string = match_string[len(Manuscript_Designator):]
+                Manuscript_Designator = Alpha_Manuscript_Designator_Regex.search(
+                    match_string
+                ).group(0)
+                match_string = match_string[len(Manuscript_Designator) :]
                 segment_indicator = None
             else:
-                Manuscript_Designator = Digit_Manuscript_Designator_Regex.search(match_string).group(0)
-                match_string = match_string[len(Manuscript_Designator):]
+                Manuscript_Designator = Digit_Manuscript_Designator_Regex.search(
+                    match_string
+                ).group(0)
+                match_string = match_string[len(Manuscript_Designator) :]
                 # if the manuscript designator is a number, the letters following it are the segment indicator
-                segment_indicator = segment_indicator_regex.search(match_string).group(0)
-                match_string = match_string[len(segment_indicator):]
+                segment_indicator = segment_indicator_regex.search(match_string).group(
+                    0
+                )
+                match_string = match_string[len(segment_indicator) :]
 
             # remove the leading Q from manuscript designator if it exists
             if Manuscript_Designator[0] == "Q":
@@ -250,11 +295,11 @@ class DSS_Parser(Reference_Parser):
 
         # find the column number
         column_number = column_number_regex.search(match_string).group(0)
-        match_string = match_string[len(column_number):]
+        match_string = match_string[len(column_number) :]
 
         # find the line number
         line_number = line_number_regex.search(match_string).group(0)
-        match_string = match_string[len(line_number):]
+        match_string = match_string[len(line_number) :]
 
         use_captial_columns = column_number.isupper()
         ref_logger.debug(f"Found Cave_Number {Cave_Number}")
@@ -262,7 +307,14 @@ class DSS_Parser(Reference_Parser):
         ref_logger.debug(f"Found segment indicator {segment_indicator}")
         ref_logger.debug(f"Found column number {column_number}")
         ref_logger.debug(f"Found line number {line_number}")
-        return Index_Models.DSS_Reference(Cave_Number, Manuscript_Designator,  column_number, line_number, Segment_Indicator=segment_indicator, Use_Capital_Columns=use_captial_columns)
+        return Index_Models.DSS_Reference(
+            Cave_Number,
+            Manuscript_Designator,
+            column_number,
+            line_number,
+            Segment_Indicator=segment_indicator,
+            Use_Capital_Columns=use_captial_columns,
+        )
 
     def parse(self, reference_string: str) -> list[Index_Models.DSS_Reference]:
         """
@@ -270,16 +322,19 @@ class DSS_Parser(Reference_Parser):
         """
         ref_logger.debug(f"Parsing reference string {reference_string}")
         references = []
-        matches = re.findall(r"\d{1,3}Q[A-Z]?\d{0,3}[a-z]{0,5},?\s[ivxIVX]{1,10}[.:,\s]\s?\d{1,3}", reference_string)
+        matches = re.findall(
+            r"\d{1,3}Q[A-Z]?\d{0,3}[a-z]{0,5},?\s[ivxIVX]{1,10}[.:,\s]\s?\d{1,3}",
+            reference_string,
+        )
         ref_logger.debug(f"Found {len(matches)} matches")
         for m in matches:
             ref_logger.debug(f"Converting match {m} to object")
             reference = self.convert_to_obj(m)
             references.append(reference)
         return references
-    
-class Main_Parser:
 
+
+class Main_Parser:
     def __init__(self, parser_names=[]):
         self.parsers = []
         self.load_parsers(parser_names)
@@ -290,15 +345,15 @@ class Main_Parser:
         for name in names:
             if name == "NT":
                 parser = NT_Parser()
-                parser.load_alias_file('aliases/NT.json')
+                parser.load_alias_file("aliases/NT.json")
                 self.parsers.append(parser)
             elif name == "OT":
                 parser = OT_Parser()
-                parser.load_alias_file('aliases/OT.json')
+                parser.load_alias_file("aliases/OT.json")
                 self.parsers.append(parser)
             elif name == "AP":
                 parser = AP_Parser()
-                parser.load_alias_file('aliases/AP.json')
+                parser.load_alias_file("aliases/AP.json")
                 self.parsers.append(parser)
             elif name == "DSS":
                 with open("aliases/DSS.json") as f:
@@ -308,14 +363,14 @@ class Main_Parser:
 
     def parse_over_page_break(self, page_a_string: str, page_b_string: str) -> list:
         """
-        Parses a group of text which crosses a page break, returns references found only in the union of the two page, 
+        Parses a group of text which crosses a page break, returns references found only in the union of the two page,
         excluding references found in either page alone. This handles cases where a reference is split between two pages.
         """
         page_a_string = page_a_string.strip()
         page_b_string = page_b_string.lstrip()
-        if page_a_string[-1] != ' ' and page_b_string[0] != ' ':
+        if page_a_string[-1] != " " and page_b_string[0] != " ":
             ref_logger.debug(f"Adding space between page a and page b")
-            page_a_string += ' '
+            page_a_string += " "
         union = self.parse(page_a_string + page_b_string)
         ref_logger.debug(f"Found {len(union)} references in the union of the two pages")
         page_a = self.parse(page_a_string)
@@ -334,7 +389,6 @@ class Main_Parser:
             ref_logger.debug(f"Union after removal: {union}")
         return union
 
-
     def parse(self, reference_string: str) -> list:
         """
         Parses a reference string for a reference
@@ -348,7 +402,7 @@ class Main_Parser:
             ref_logger.debug(f"Using parser {parser}")
             references.extend(parser.parse(reference_string))
         return references
-    
+
     def parse_lines(self, lines: list) -> list:
         """
         Parses a list of lines for references
@@ -358,25 +412,27 @@ class Main_Parser:
             if type(line) is str:
                 references.extend(self.parse(line))
                 if i > 0:
-                    references.extend(self.parse_over_page_break(lines[i-1], line))
+                    references.extend(self.parse_over_page_break(lines[i - 1], line))
             elif type(line) is dict:
-                text = line['Raw_Text']
+                text = line["Raw_Text"]
                 references.extend(self.parse(text))
                 if i > 0:
-                    references.extend(self.parse_over_page_break(lines[i-1]['Raw_Text'], line))
-            
-        return references 
-    
+                    references.extend(
+                        self.parse_over_page_break(lines[i - 1]["Raw_Text"], line)
+                    )
+
+        return references
+
     def parse_page(self, page: dict) -> list:
         """
         Parses a page for references, the page dictionary must have a key 'Raw_Text' which is a string
         """
-        if 'Raw_Text' not in page.keys():
+        if "Raw_Text" not in page.keys():
             raise KeyError("The page dictionary must have a key 'Raw_Text'")
-        page_text = page['Raw_Text']
-        page_lines = page_text.split('\n')
+        page_text = page["Raw_Text"]
+        page_lines = page_text.split("\n")
         return self.parse_lines(page_lines)
-    
+
     def parse_document(self, document: list) -> dict:
         """
         Parses a document for references, the document must be a list of page dictionaries
@@ -386,6 +442,10 @@ class Main_Parser:
         for i, page in enumerate(document):
             current_page_references = self.parse_page(page)
             if i > 0:
-                current_page_references.extend(self.parse_over_page_break(document[i-1]['Raw_Text'], page['Raw_Text']))
-            references[page['Relative_Number']] = current_page_references
+                current_page_references.extend(
+                    self.parse_over_page_break(
+                        document[i - 1]["Raw_Text"], page["Raw_Text"]
+                    )
+                )
+            references[page["Relative_Number"]] = current_page_references
         return references
