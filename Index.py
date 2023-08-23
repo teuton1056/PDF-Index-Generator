@@ -109,6 +109,27 @@ class Index:
         index_logger.debug(f"Group After Book Sort: {group}")
         return group
 
+    def _html_format(self) -> str:
+        """
+        Formats index as an html file.
+        """
+        index_logger.debug("Formatting index for .html file")
+        output = "<body>\n"
+        output += "<h1>Index</h1>\n"
+        groups = self.group_entries()
+        for group in groups:
+            output += "<h2>" + group.__name__ + "</h2>\n"
+            self.format_group(groups[group])
+            order = self.load_sort_order(group.__name__)
+            if order != {}:
+                groups[group] = self.sort_entries_by_order(groups[group], order)
+            else:
+                groups[group].sort(key=lambda x: x.formatted_reference)
+            for entry in groups[group]:
+                output += "<p>" + entry.formatted_entry + "</p>\n"
+        output += "</body>"
+        return output
+
     def _txt_format(self) -> str:
         """
         Formats index for .txt file.
