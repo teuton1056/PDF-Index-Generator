@@ -19,6 +19,9 @@ def main(fname="sample_pdfs/test_1.pdf", base_number=1):
     str_index = index.format_index('txt')
     with open("index.txt", "w") as f:
         f.write(str_index)
+    html_index = index.format_index('html')
+    with open("index.html", "w") as f:
+        f.write(html_index)
     # ... do stuff with refs
     main_logger.info("Program complete")
     main_logger.info("Time elapsed: " + str(time.time() - t))

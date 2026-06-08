@@ -122,13 +122,70 @@ class Index:
             for entry in groups[group]:
                 output += entry.formatted_entry + "\n"
         return output
-    
+
+    def _html_format(self) -> str:
+        """
+        Formats index as an HTML document.
+        """
+        index_logger.debug("Formatting index for .html file")
+        groups = self.group_entries()
+        sections_html = ""
+        for group in groups:
+            self.format_group(groups[group])
+            order = self.load_sort_order(group.__name__)
+            if order != {}:
+                groups[group] = self.sort_entries_by_order(groups[group], order)
+            else:
+                groups[group].sort(key=lambda x: x.formatted_reference)
+            rows = ""
+            for entry in groups[group]:
+                ref = entry.formatted_reference.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                rows += f"        <tr><td class=\"ref\">{ref}</td><td class=\"page\">{entry.page}</td></tr>\n"
+            section_title = group.__name__.replace("_", " ")
+            sections_html += (
+                f"    <section>\n"
+                f"      <h2>{section_title}</h2>\n"
+                f"      <table>\n"
+                f"        <thead><tr><th>Reference</th><th>Page</th></tr></thead>\n"
+                f"        <tbody>\n"
+                f"{rows}"
+                f"        </tbody>\n"
+                f"      </table>\n"
+                f"    </section>\n"
+            )
+        return (
+            "<!DOCTYPE html>\n"
+            "<html lang=\"en\">\n"
+            "<head>\n"
+            "  <meta charset=\"UTF-8\">\n"
+            "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+            "  <title>Index</title>\n"
+            "  <style>\n"
+            "    body { font-family: serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }\n"
+            "    h1 { font-size: 1.8rem; border-bottom: 2px solid #333; padding-bottom: 0.5rem; }\n"
+            "    h2 { font-size: 1.2rem; margin-top: 2rem; color: #444; }\n"
+            "    table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }\n"
+            "    th { text-align: left; border-bottom: 1px solid #999; padding: 0.3rem 0.5rem; }\n"
+            "    td { padding: 0.2rem 0.5rem; }\n"
+            "    tr:nth-child(even) { background: #f5f5f5; }\n"
+            "    td.page { color: #555; width: 4rem; text-align: right; }\n"
+            "  </style>\n"
+            "</head>\n"
+            "<body>\n"
+            "  <h1>Index</h1>\n"
+            f"{sections_html}"
+            "</body>\n"
+            "</html>\n"
+        )
+
     def format_index(self, format_type: str) -> str:
         """
         Formats index.
         """
         if format_type == "txt":
             return self._txt_format()
+        elif format_type == "html":
+            return self._html_format()
         else:
             raise Exception("Invalid format type: " + format_type)
 
